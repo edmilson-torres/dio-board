@@ -33,7 +33,12 @@ public class CardDAO {
     }
 
     public void moveToColumn(final Long columnId, final Long cardId) throws SQLException{
-        var sql = "UPDATE CARDS SET board_column_id = ? WHERE id = ?;";
+        var sql = """
+            UPDATE CARDS 
+            SET board_column_id = ?,
+                entered_column_at = CURRENT_TIMESTAMP 
+            WHERE id = ?;
+            """;
         try(var statement = connection.prepareStatement(sql)){
             var i = 1;
             statement.setLong(i ++, columnId);
@@ -52,6 +57,8 @@ public class CardDAO {
                        b.block_reason,
                        c.board_column_id,
                        bc.name,
+                       c.entered_column_at,
+                       c.created_at,
                        (SELECT COUNT(sub_b.id)
                                FROM BLOCKS sub_b
                               WHERE sub_b.card_id = c.id) blocks_amount
@@ -77,7 +84,9 @@ public class CardDAO {
                         resultSet.getString("b.block_reason"),
                         resultSet.getInt("blocks_amount"),
                         resultSet.getLong("c.board_column_id"),
-                        resultSet.getString("bc.name")
+                        resultSet.getString("bc.name"),
+                        toOffsetDateTime(resultSet.getTimestamp("entered_column_at")),
+                        toOffsetDateTime(resultSet.getTimestamp("created_at"))
                 );
                 return Optional.of(dto);
             }

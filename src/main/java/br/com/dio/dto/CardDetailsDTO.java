@@ -10,6 +10,8 @@ public record CardDetailsDTO(Long id,
                              String blockReason,
                              int blocksAmount,
                              Long columnId,
-                             String columnName
+                             String columnName,
+                             OffsetDateTime enteredColumnAt,
+                             OffsetDateTime createdAt
 ) {
 }
