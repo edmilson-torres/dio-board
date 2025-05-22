@@ -2,7 +2,6 @@ package br.com.dio.persistence.dao;
 
 import br.com.dio.persistence.entity.BlockEntity;
 import br.com.dio.persistence.entity.BlockReportEntity;
-import br.com.dio.persistence.entity.BoardColumnEntity;
 import lombok.AllArgsConstructor;
 
 import java.sql.Connection;
@@ -14,7 +13,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static br.com.dio.persistence.converter.OffsetDateTimeConverter.toTimestamp;
-import static br.com.dio.persistence.entity.BoardColumnKindEnum.findByName;
 
 @AllArgsConstructor
 public class BlockDAO {

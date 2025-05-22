@@ -1,14 +1,11 @@
 package br.com.dio.service;
 
 import br.com.dio.persistence.dao.BlockDAO;
-import br.com.dio.persistence.dao.BoardDAO;
-import br.com.dio.persistence.entity.BlockEntity;
 import br.com.dio.persistence.entity.BlockReportEntity;
 import lombok.AllArgsConstructor;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 @AllArgsConstructor
