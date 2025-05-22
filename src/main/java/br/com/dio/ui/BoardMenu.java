@@ -4,10 +4,7 @@ import br.com.dio.dto.BoardColumnInfoDTO;
 import br.com.dio.persistence.entity.BoardColumnEntity;
 import br.com.dio.persistence.entity.BoardEntity;
 import br.com.dio.persistence.entity.CardEntity;
-import br.com.dio.service.BoardColumnQueryService;
-import br.com.dio.service.BoardQueryService;
-import br.com.dio.service.CardQueryService;
-import br.com.dio.service.CardService;
+import br.com.dio.service.*;
 import lombok.AllArgsConstructor;
 
 import java.sql.SQLException;
@@ -36,7 +33,8 @@ public class BoardMenu {
                 System.out.println("7 - Ver coluna com cards");
                 System.out.println("8 - Ver card");
                 System.out.println("9 - Voltar para o menu anterior um card");
-                System.out.println("10 - Sair");
+                System.out.println("10 - Gerar Block Report");
+                System.out.println("11 - Sair");
                 option = scanner.nextInt();
                 switch (option) {
                     case 1 -> createCard();
@@ -48,7 +46,8 @@ public class BoardMenu {
                     case 7 -> showColumn();
                     case 8 -> showCard();
                     case 9 -> System.out.println("Voltando para o menu anterior");
-                    case 10 -> System.exit(0);
+                    case 10 -> generateReport();
+                    case 11 -> System.exit(0);
                     default -> System.out.println("Opção inválida, informe uma opção do menu");
                 }
             }
@@ -65,6 +64,7 @@ public class BoardMenu {
         System.out.println("Informe a descrição do card");
         card.setDescription(scanner.next());
         card.setBoardColumn(entity.getInitialColumn());
+        card.setBoardId(entity.getId());
         try(var connection = getConnection()){
             new CardService(connection).create(card);
         }
@@ -170,6 +170,12 @@ public class BoardMenu {
                                 System.out.printf("Está no momento na coluna %s - %s\n", c.columnId(), c.columnName());
                             },
                             () -> System.out.printf("Não existe um card com o id %s\n", selectedCardId));
+        }
+    }
+
+    private void generateReport() throws SQLException {
+        try(var connection = getConnection()){
+            new BlockReportService(connection).generateReport(entity.getId());
         }
     }
 

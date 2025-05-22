@@ -18,11 +18,12 @@ public class CardDAO {
     private Connection connection;
 
     public CardEntity insert(final CardEntity entity) throws SQLException {
-        var sql = "INSERT INTO CARDS (title, description, board_column_id) values (?, ?, ?);";
+        var sql = "INSERT INTO CARDS (title, description, board_id, board_column_id) values (?, ?, ?, ?);";
         try(var statement = connection.prepareStatement(sql)){
             var i = 1;
             statement.setString(i ++, entity.getTitle());
             statement.setString(i ++, entity.getDescription());
+            statement.setLong(i ++, entity.getBoardId());
             statement.setLong(i, entity.getBoardColumn().getId());
             statement.executeUpdate();
             if (statement instanceof StatementImpl impl){
@@ -55,6 +56,7 @@ public class CardDAO {
                        c.description,
                        b.blocked_at,
                        b.block_reason,
+                       c.board_id,
                        c.board_column_id,
                        bc.name,
                        c.entered_column_at,

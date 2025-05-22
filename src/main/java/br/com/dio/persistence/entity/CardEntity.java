@@ -11,6 +11,8 @@ public class CardEntity {
     private String title;
     private String description;
     private BoardColumnEntity boardColumn = new BoardColumnEntity();
+    private Long boardId;
     private OffsetDateTime enteredColumnAt;
     private OffsetDateTime createdAt;
+
 }

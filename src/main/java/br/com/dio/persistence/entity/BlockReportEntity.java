@@ -5,7 +5,7 @@ import lombok.Data;
 import java.time.OffsetDateTime;
 
 @Data
-public class BlockEntity {
+public class BlockReportEntity {
 
     private Long id;
     private OffsetDateTime blockedAt;
@@ -13,5 +13,12 @@ public class BlockEntity {
     private OffsetDateTime unblockedAt;
     private String unblockReason;
     private Long cardId;
+    private String cardTitle;
+    private String duration;
+
+    @Override
+    public String toString() {
+        return String.format("| %-23s | %23s | %-23s | %-23s |", cardTitle, duration, blockReason, unblockReason);
+    }
 
 }
